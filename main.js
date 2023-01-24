@@ -164,27 +164,6 @@ class Canvas {
             ctx.clearRect(0, 0, canvas.width, canvas.height)
         };
 
-        //下载画布，这个地方需要我下来好好研究一下
-        download.onclick = function () {
-            var compositeOperation = ctx.globalCompositeOperation;
-            ctx.globalCompositeOperation = "destination-over";
-            ctx.fillStyle = "#fff";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            var imageData = canvas.toDataURL("image/png");
-            ctx.putImageData(
-                ctx.getImageData(0, 0, canvas.width, canvas.height),
-                0,
-                0
-            );
-            ctx.globalCompositeOperation = compositeOperation;
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.href = imageData;
-            a.download = "mypaint";
-            a.target = "_blank";
-            a.click();
-        };
-
         function removeActive() {
             var spans = color.getElementsByTagName('span')
             for (var i = 0; i < spans.length; i++) {
@@ -251,4 +230,4 @@ class Canvas {
 }
 
 
-var tabs = new Canvas()
+let tabs = new Canvas()
