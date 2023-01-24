@@ -5,7 +5,10 @@
     box-sizing: border-box;
 }
 body{
+    /* 阻止移动端chrome的下拉刷新 */
     overflow: hidden;
+    /* 禁止触摸手势 */
+    touch-action:none;
 }
 
 ol,

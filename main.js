@@ -126,11 +126,11 @@ class Canvas {
             ctx.moveTo(x1, y1)
             ctx.strokeStyle = currentColor
             ctx.fillStyle = currentColor
-            if(eraserEnabled){
-                ctx.lineWidth =40;
+            if (eraserEnabled) {
+                ctx.lineWidth = 40;
                 ctx.strokeStyle = 'white'
                 ctx.fillStyle = 'white'
-            }else{
+            } else {
                 ctx.lineWidth = lineWidth
             }
             ctx.lineTo(x2, y2)
@@ -146,7 +146,7 @@ class Canvas {
     }
 
     bindEvents() {
-        pen.onclick = function(){
+        pen.onclick = function () {
             pen.classList.add('active')
             eraser.classList.remove('active')
             eraserEnabled = false
@@ -171,6 +171,29 @@ class Canvas {
             }
         }
 
+        //下载画布
+        download.onclick = function () {
+            // source-over默认设置，并在现有画布上下文之上绘制新图形。先将重新绘制形状的type保存下来设置为可继续覆盖destination-over
+            let compositeOperation = ctx.globalCompositeOperation;
+            ctx.globalCompositeOperation = "destination-over";
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // 将图形变成url
+            let imageData = canvas.toDataURL("image/png");
+            ctx.putImageData(
+                ctx.getImageData(0, 0, canvas.width, canvas.height),
+                0,
+                0
+            );
+            ctx.globalCompositeOperation = compositeOperation;
+            // 添加a标签跳转图片生成的url来下载
+            let a = document.createElement("a");
+            document.body.appendChild(a);
+            a.href = imageData;
+            a.download = "mypaint";
+            a.target = "_blank";
+            a.click();
+        };
         black.onclick = function () {
             removeActive()
             black.classList.add('active')
